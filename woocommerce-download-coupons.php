@@ -97,6 +97,26 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
         */
         public function generate_csv()
         {
+
+            // Month the coupon was issued gotten via expiry date (so the month before the one in the expiry_date)
+            // Since they go from 0-11 and we're getting the previous month
+            // We treat the array as beginning with 1 and 0 is december
+            // HACKY STUFF inc.
+            $months = array(
+              0  => 'Dezembro',
+              1  => 'Janeiro',
+              2  => 'Fevereiro',
+              3  => 'Março',
+              4  => 'Abril',
+              5  => 'Maio',
+              6  => 'Junho',
+              7  => 'Julho',
+              8  => 'Agosto',
+              9  => 'Setembro',
+              10  => 'Outubro',
+              11 => 'Novembro',
+            );
+
             global $wpdb;
 
             $wpdb->show_errors();
@@ -114,6 +134,9 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
               $csv_fields[] = 'Codigo';
               $csv_fields[] = 'Email';
               $csv_fields[] = 'Valor';
+              $csv_fields[] = 'Mes';
+              $csv_fields[] = 'Data de Expiracao';
+
               $output_handle = @fopen( 'php://output', 'w' );
 
               fputcsv( $output_handle, $csv_fields );
@@ -128,6 +151,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
 
                   $leadArray['post_excerpt'] = $matches[1];
                   $leadArray['value'] = $coupon->coupon_amount;
+                  $leadArray['month'] = $months[(strptime($coupon->expiry_date, '%s')['tm_mon'])];
+                  $leadArray['expiry_date'] = $coupon->expiry_date;
 
                   fputcsv( $output_handle, $leadArray );
                 }
