@@ -2,8 +2,8 @@
 
 /**
  * Plugin Name: WooCommerce Download Coupons
- * Plugin URI: https://none
- * Description: Download woocommerce coupons
+ * Plugin URI: https://github.com/lfzawacki/woocommerce-download-coupons
+ * Description: Download your woocommerce coupons as a .csv table
  * Author: Lucas Fialho Zawacki
  * Author URI: http://blog.lfzawacki.com/
  * Version: 0.1
