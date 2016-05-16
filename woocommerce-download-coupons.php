@@ -122,7 +122,7 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
             $wpdb->show_errors();
 
             $MyQuery = $wpdb->get_results(
-              $wpdb->prepare("SELECT post_title,post_excerpt FROM wp_posts p WHERE p.post_type = %s;", ['shop_coupon'])
+              $wpdb->prepare("SELECT post_title,post_excerpt FROM " . $wpdb->prefix . "posts p WHERE p.post_type = %s;", ['shop_coupon'])
             );
 
             if (! $MyQuery) {
